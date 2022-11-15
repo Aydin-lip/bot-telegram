@@ -1,4 +1,5 @@
-const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler] = require("./config")
+const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler, cancleEditProfile] = require("./config")
+const cancel = require("./cancel")
 const fs = require("fs")
 
 module.exports = bot => {
@@ -11,8 +12,7 @@ module.exports = bot => {
     profile = callUserProfile(ctx)
     ctx.deleteMessage()
     editProfile.id = ctx.chat.id
-    editProf = true
-    step = 1
+    cancleEditProfile(true, "All", true, 1, 0)
     ctx.reply("ویرایش پروفایل", {
       reply_markup: {
         remove_keyboard: true,
@@ -27,13 +27,16 @@ module.exports = bot => {
 
   let skips = ["skip-firstname", "skip-lastname", "skip-phone", "skip-address", "skip-email", "skip-jobPosition", "skip-resume"]
   bot.action(skips, ctx => {
+    let upC = cancleEditProfile(false, "All")
+    editProf = upC.editProf
+    step = upC.stepProf
+    skipNum = upC.skipProf
     switch (ctx.match.split("-")[1]) {
       case "firstname":
         if (step === 1) {
           ctx.deleteMessage()
           editProfile.firstname = profile?.firstname
-          step = 1
-          skipNum = 1
+          cancleEditProfile(true, "All", true, 1, 1)
           ctx.reply(`نام:   ${profile?.firstname}`)
           nextStepEditProfile(ctx)
         }
@@ -42,8 +45,7 @@ module.exports = bot => {
         if (step === 2) {
           ctx.deleteMessage()
           editProfile.lastname = profile?.lastname
-          step = 2
-          skipNum = 2
+          cancleEditProfile(true, "All", true, 2, 2)
           ctx.reply(`نام خانوادگی:   ${profile?.lastname}`)
           nextStepEditProfile(ctx)
         }
@@ -52,8 +54,7 @@ module.exports = bot => {
         if (step === 3) {
           ctx.deleteMessage()
           editProfile.phone = profile?.phone
-          step = 3
-          skipNum = 3
+          cancleEditProfile(true, "All", true, 3, 3)
           ctx.reply(`شماره تماس:   ${profile?.phone}`)
           nextStepEditProfile(ctx)
         }
@@ -62,8 +63,7 @@ module.exports = bot => {
         if (step === 4) {
           ctx.deleteMessage()
           editProfile.address = profile?.address
-          step = 4
-          skipNum = 4
+          cancleEditProfile(true, "All", true, 4, 4)
           ctx.reply(`آدرس:   ${profile?.address}`)
           nextStepEditProfile(ctx)
         }
@@ -72,8 +72,7 @@ module.exports = bot => {
         if (step === 5) {
           ctx.deleteMessage()
           editProfile.email = profile?.email
-          step = 5
-          skipNum = 5
+          cancleEditProfile(true, "All", true, 5, 5)
           ctx.reply(`ایمیل:   ${profile?.email}`)
           nextStepEditProfile(ctx)
         }
@@ -82,8 +81,7 @@ module.exports = bot => {
         if (step === 6) {
           ctx.deleteMessage()
           editProfile.jobPosition = profile?.jobPosition
-          step = 6
-          skipNum = 6
+          cancleEditProfile(true, "All", true, 6, 6)
           ctx.reply(`موقعیت شغلی:   ${profile?.jobPosition}`)
           nextStepEditProfile(ctx)
         }
@@ -92,8 +90,7 @@ module.exports = bot => {
         if (step === 7) {
           ctx.deleteMessage()
           editProfile.resume = profile?.resume
-          step = 7
-          skipNum = 7
+          cancleEditProfile(true, "All", true, 7, 7)
           ctx.reply(`رزومه:   ${profile?.resume ? "✔" : ""}`)
           nextStepEditProfile(ctx)
         }
@@ -104,31 +101,33 @@ module.exports = bot => {
     }
   })
 
-  bot.hears("انصراف", ctx => {
-    editProf = false
-    step = 0
-    skipNum = 0
-    const messagee = `
-شما به منوی اصلی ربات برگشتید.
-لطفا یکی از گزینه های زیر را انتخاب کنید
-  `
-    ctx.reply(messagee, {
-      reply_markup: {
-        keyboard: [
-          [{ text: "آگهی های ثبت شده" }],
-          [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-          [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-          [{ text: "درباره ما" }, { text: "کانال ما" }]
-        ],
-        resize_keyboard: true
-      }
-    })
-  })
+  //   bot.hears("انصراف", ctx => {
+  //     editProf = false
+  //     step = 0
+  //     skipNum = 0
+  //     const messagee = `
+  // شما به منوی اصلی ربات برگشتید.
+  // لطفا یکی از گزینه های زیر را انتخاب کنید
+  //   `
+  //     ctx.reply(messagee, {
+  //       reply_markup: {
+  //         keyboard: [
+  //           [{ text: "آگهی های ثبت شده" }],
+  //           [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
+  //           [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
+  //           [{ text: "درباره ما" }, { text: "کانال ما" }]
+  //         ],
+  //         resize_keyboard: true
+  //       }
+  //     })
+  //   })
 
-  bot.on("message", ctx => {
+  bot.on("message", (ctx, next) => {
+    editProf = cancleEditProfile(false, "editProf")
     if (editProf) {
       nextStepEditProfile(ctx)
     }
+    next(ctx)
   })
 
   const haveParam = (ctx, message, info, nameInfo) => {
@@ -143,13 +142,17 @@ module.exports = bot => {
   }
 
   const nextStepEditProfile = ctx => {
+    let upC = cancleEditProfile(false, "All")
+    editProf = upC.editProf
+    step = upC.stepProf
+    skipNum = upC.skipProf
     switch (step) {
       case 1:
         if (skipNum !== 1) {
           editProfile.firstname = ctx.message.text
         }
         haveParam(ctx, `نام خانوادگی:   ${profile?.lastname}`, profile?.lastname, "lastname")
-        step++
+        cancleEditProfile(true, "step", "", 2)
         break;
       case 2:
         if (skipNum !== 2) {
@@ -165,7 +168,7 @@ module.exports = bot => {
           }
         })
         haveParam(ctx, `شماره تماس:   ${profile?.phone}`, profile?.phone, "phone")
-        step++
+        cancleEditProfile(true, "step", "", 3)
         break;
       case 3:
         if (skipNum !== 3) {
@@ -184,21 +187,21 @@ module.exports = bot => {
           }
         })
         haveParam(ctx, `آدرس:   ${profile?.address}`, profile?.address, "address")
-        step++
+        cancleEditProfile(true, "step", "", 4)
         break;
       case 4:
         if (skipNum !== 4) {
           editProfile.address = ctx.message.text
         }
         haveParam(ctx, `ایمیل:   ${profile?.email}`, profile?.email, "email")
-        step++
+        cancleEditProfile(true, "step", "", 5)
         break;
       case 5:
         if (skipNum !== 5) {
           editProfile.email = ctx.message.text
         }
         haveParam(ctx, `موقعیت شغلی:   ${profile?.jobPosition}`, profile?.jobPosition, "jobPosition")
-        step++
+        cancleEditProfile(true, "step", "", 6)
         break;
       case 6:
         if (skipNum !== 6) {
@@ -209,7 +212,7 @@ module.exports = bot => {
 لطفا رزومه خود را به صورت فایل (pdf) ارسال کنید.
 `
         haveParam(ctx, message, profile?.resume, "resume")
-        step++
+        cancleEditProfile(true, "step", "", 7)
         break;
       case 7:
         if (skipNum !== 7) {
@@ -222,8 +225,7 @@ module.exports = bot => {
                 ]
               }
             })
-            step++
-            editProf = false
+            cancleEditProfile(true, "All", false, 8, 0)
           } else {
             ctx.reply("لطفا رزومه خود را به صورت فایل (pdf) ارسال کنید.")
           }
@@ -235,8 +237,7 @@ module.exports = bot => {
               ]
             }
           })
-          step++
-          editProf = false
+          cancleEditProfile(true, "All", false, 8, 0)
         }
         break
 
@@ -250,6 +251,8 @@ module.exports = bot => {
     editProf = false
     step = 0
     skipNum = 0
+    cancleEditProfile(true, "All", false, 0, 0)
+    ctx.reply("تمامی موارد به درستی وارد شد.")
 
     let profiles = fs.readFileSync("./data/profiles.json")
     let profilesData = JSON.parse(profiles)

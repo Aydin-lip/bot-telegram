@@ -7,6 +7,9 @@ const bot = new Telegraf(process.env.TOKEN)
 const start = require("./src/components/start")
 start(bot)
 
+const cancel = require("./src/components/cancel")
+cancel(bot)
+
 const registeredAds = require("./src/components/registeredAds")
 registeredAds(bot)
 

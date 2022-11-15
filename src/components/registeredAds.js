@@ -9,7 +9,7 @@ module.exports = (bot) => {
       ctx.reply(`
 نام شرکت:   ${w.company}
 دسته بندی شغلی:   ${w.category}
-محارت های مورد نیاز:   ${w.skills}
+مهارت های مورد نیاز:   ${w.skills}
 استان:   ${w.location}
 نوع قرارداد:   ${w.jobType}
 سابقه کار:   ${w.workExperience}
