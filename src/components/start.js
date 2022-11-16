@@ -13,7 +13,10 @@ module.exports = (bot) => {
       })
     }
     if (!hast) {
-      let profile = { id: ctx.chat.id, firstname: ctx.chat.first_name, lastname: ctx.chat.last_name ? ctx.chat.last_name : "", phone: "", address: "", email: "", jobPosition: "", resume: "" }
+      let profile = { id: ctx.chat.id, from: 0, firstname: ctx.chat.first_name, lastname: ctx.chat.last_name ? ctx.chat.last_name : "", phone: "", address: "", email: "", jobPosition: "", resume: "" }
+      if (ctx.message.text.split(" ").length == 2) {
+        profile.from = ctx.message.text.split(" ")[1]
+      }
       let profiles = fs.readFileSync("./data/profiles.json")
       let profilesData = JSON.parse(profiles)
       profilesData.push(profile)

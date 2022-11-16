@@ -28,6 +28,8 @@ myAds(bot)
 const editAd = require("./src/components/editAd")
 editAd(bot)
 
+const addFriend = require("./src/components/addFriend")
+addFriend(bot)
 
 
 
