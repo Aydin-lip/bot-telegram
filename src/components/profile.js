@@ -1,4 +1,12 @@
-const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler] = require("./config")
+const [
+  callUserProfile,
+  callRegesteredAds,
+  callRegesteredAdsCount,
+  complatedProf,
+  registeredNewAd,
+  editProfileHandler,
+  cancleEditProfile,
+  cancleRegisterNewAd] = require("./config")
 
 module.exports = bot => {
   let profile = {}

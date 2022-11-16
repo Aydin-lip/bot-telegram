@@ -27,6 +27,20 @@ const callRegesteredAds = ctx => {
   return { ads, myAds }
 }
 
+// get count all ads and user ads
+const callRegesteredAdsCount = ctx => {
+  let adsCount = []
+  let myAdsCount = []
+  let allRegister = fs.readFileSync("./data/countAds.json")
+  adsCount = JSON.parse(allRegister)
+  adsCount.filter(a => {
+    if (a.id == ctx.chat.id) {
+      myAdsCount.push(a.count)
+    }
+  })
+  return { adsCount, myAdsCount }
+}
+
 // user profile complated or no
 const complatedProf = ctx => {
   let profile = callUserProfile(ctx)
@@ -164,12 +178,49 @@ const cancleRegisterNewAd = (edit, how, registerAdA, stepRegisterAdA) => {
   }
 }
 
+// cancel edit Ad prosecs
+let editAd = false
+let stepAd = 0
+const cancleEditAd = (edit, how, editAdA, stepAdA) => {
+  if (edit) {
+    switch (how) {
+      case "editAd":
+        editAd = editAdA
+        break;
+      case "step":
+        stepAd = stepAdA
+        break;
+      case "All":
+        editAd = editAdA
+        stepAd = stepAdA
+        break;
+
+      default:
+        break;
+    }
+  } else {
+    switch (how) {
+      case "editAd":
+        return editAd
+      case "step":
+        return stepAd
+      case "All":
+        return { editAd, stepAd }
+
+      default:
+        break;
+    }
+  }
+}
+
 
 module.exports = [
   callUserProfile,
   callRegesteredAds,
+  callRegesteredAdsCount,
   complatedProf,
   registeredNewAd,
   editProfileHandler,
   cancleEditProfile,
-  cancleRegisterNewAd]
+  cancleRegisterNewAd,
+  cancleEditAd]

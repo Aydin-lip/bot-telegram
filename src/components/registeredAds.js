@@ -1,11 +1,20 @@
-const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler] = require("./config")
+const [
+  callUserProfile,
+  callRegesteredAds,
+  callRegesteredAdsCount,
+  complatedProf,
+  registeredNewAd,
+  editProfileHandler,
+  cancleEditProfile,
+  cancleRegisterNewAd] = require("./config")
 
 module.exports = (bot) => {
   bot.hears("آگهی های ثبت شده", ctx => {
     let Call = callRegesteredAds(ctx)
-    let adsID = Call?.ads?.map(w => `sendResume-${w.id}`)
+    let adsID = []
 
     Call?.ads?.forEach(w => {
+      adsID.push(`sendResume-${w.id}`)
       ctx.reply(`
 نام شرکت:   ${w.company}
 دسته بندی شغلی:   ${w.category}

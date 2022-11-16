@@ -1,6 +1,7 @@
 const [
   callUserProfile,
   callRegesteredAds,
+  callRegesteredAdsCount,
   complatedProf,
   registeredNewAd,
   editProfileHandler,
@@ -11,23 +12,24 @@ const fs = require("fs")
 
 module.exports = bot => {
   // ["id" , "company", "category", "skills", "location", "jobType", "workExperience", "salary", "description"]
-  let adInfo = { id: 0, company: "", category: "", skills: "", location: "", jobType: "", workExperience: "", salary: "", description: "" }
+  let adInfo = { id: 0, count: 0,company: "", category: "", skills: "", location: "", jobType: "", workExperience: "", salary: "", description: "" }
 
   let registerAd = false
   let step = 0
   bot.hears("ثبت آگهی جدید", ctx => {
     if (registeredNewAd(ctx)) {
       adInfo.id = ctx.chat.id
-      registerAd = cancleRegisterNewAd(true, "All", true, 1)
+      registerAd = true
+      cancleRegisterNewAd(true, "All", true, 1)
     }
   })
 
   let jobType = ["تمام وقت", "پاره وقت", "کارآموزی", "دورکاری"]
-  bot.hears(jobType, ctx => {
+  bot.hears(jobType, (ctx, next) => {
     const upC = cancleRegisterNewAd(false, "All")
     registerAd = upC.registerAd
     step = upC.stepRegisterAd
-    if (step === 5) {
+    if (registerAd && step === 5) {
       adInfo.jobType = ctx.match
       ctx.reply("سابقه کاری:", {
         reply_markup: {
@@ -40,14 +42,15 @@ module.exports = bot => {
       })
       cancleRegisterNewAd(true, "stepRegisterAd", true, 6)
     }
+    next(ctx)
   })
 
   let workExperience = ["بدون محدودیت سابقه کار", "کمتر از سه سال", "سه تا شش سال", "بیش از شش سال"]
-  bot.hears(workExperience, ctx => {
+  bot.hears(workExperience, (ctx, next) => {
     const upC = cancleRegisterNewAd(false, "All")
     registerAd = upC.registerAd
     step = upC.stepRegisterAd
-    if (step === 6) {
+    if (registerAd && step === 6) {
       adInfo.workExperience = ctx.match
       ctx.reply("حداقل حقوق:", {
         reply_markup: {
@@ -58,6 +61,7 @@ module.exports = bot => {
       })
       cancleRegisterNewAd(true, "stepRegisterAd", true, 7)
     }
+    next(ctx)
   })
 
   bot.on("message", (ctx, next) => {
@@ -102,7 +106,7 @@ module.exports = bot => {
           break;
         case 7:
           adInfo.salary = ctx.message.text
-          ctx.reply("توضیحات بیشتر:")
+          ctx.reply("توضیحات:")
           cancleRegisterNewAd(true, "stepRegisterAd", true, 8)
           break;
         case 8:
@@ -130,6 +134,13 @@ module.exports = bot => {
     step = upC.stepRegisterAd
     if (step === 9) {
       ctx.deleteMessage()
+
+      let count = callRegesteredAdsCount(ctx)
+      adInfo.count = count.adsCount[count.adsCount.length - 1].count + 1
+      let myAdCount = {count: adInfo.count, id: ctx.chat.id}
+      let adsCount = count.adsCount
+      adsCount.push(myAdCount)
+
       step = 0
       registerAd = false
       cancleRegisterNewAd(true, "All", false, 0)
@@ -138,6 +149,7 @@ module.exports = bot => {
       let ads = objAds.ads
       ads.push(adInfo)
       fs.writeFileSync("./data/registeredAds.json", JSON.stringify(ads))
+      fs.writeFileSync("./data/countAds.json", JSON.stringify(adsCount))
 
       const message = `
 نام شرکت:   ${adInfo.company}
@@ -153,7 +165,6 @@ ${adInfo.description}`
       ctx.reply(message)
 
     }
-
 
     const messagee = `
 آگهی شما با موفقیت ثبت شد.

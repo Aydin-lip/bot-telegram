@@ -19,11 +19,15 @@ registerAd(bot)
 const profile = require("./src/components/profile")
 profile(bot)
 
+const editProfile = require("./src/components/editProfile")
+editProfile(bot)
+
 const myAds = require("./src/components/myAds")
 myAds(bot)
 
-const editProfile = require("./src/components/editProfile")
-editProfile(bot)
+const editAd = require("./src/components/editAd")
+editAd(bot)
+
 
 
 

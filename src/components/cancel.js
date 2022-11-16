@@ -1,16 +1,19 @@
 const [
   callUserProfile,
   callRegesteredAds,
+  callRegesteredAdsCount,
   complatedProf,
   registeredNewAd,
   editProfileHandler,
   cancleEditProfile,
-  cancleRegisterNewAd] = require("./config")
+  cancleRegisterNewAd,
+  cancleEditAd] = require("./config")
 
 module.exports = bot => {
   bot.hears("انصراف", ctx => {
     cancleEditProfile(true, "All", false, 0, 0)
     cancleRegisterNewAd(true, "All", false, 0)
+    cancleEditAd(true, "All", false, 0)
     const messagee = `
 شما به منوی اصلی ربات برگشتید.
 لطفا یکی از گزینه های زیر را انتخاب کنید

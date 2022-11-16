@@ -1,4 +1,12 @@
-const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler, cancleEditProfile] = require("./config")
+const [
+  callUserProfile,
+  callRegesteredAds,
+  callRegesteredAdsCount,
+  complatedProf,
+  registeredNewAd,
+  editProfileHandler,
+  cancleEditProfile,
+  cancleRegisterNewAd] = require("./config")
 const cancel = require("./cancel")
 const fs = require("fs")
 
@@ -100,27 +108,6 @@ module.exports = bot => {
         break;
     }
   })
-
-  //   bot.hears("انصراف", ctx => {
-  //     editProf = false
-  //     step = 0
-  //     skipNum = 0
-  //     const messagee = `
-  // شما به منوی اصلی ربات برگشتید.
-  // لطفا یکی از گزینه های زیر را انتخاب کنید
-  //   `
-  //     ctx.reply(messagee, {
-  //       reply_markup: {
-  //         keyboard: [
-  //           [{ text: "آگهی های ثبت شده" }],
-  //           [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-  //           [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-  //           [{ text: "درباره ما" }, { text: "کانال ما" }]
-  //         ],
-  //         resize_keyboard: true
-  //       }
-  //     })
-  //   })
 
   bot.on("message", (ctx, next) => {
     editProf = cancleEditProfile(false, "editProf")

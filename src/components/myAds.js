@@ -1,14 +1,25 @@
-const [callUserProfile, callRegesteredAds, complatedProf, registeredNewAd, editProfileHandler] = require("./config")
+const [
+  callUserProfile,
+  callRegesteredAds,
+  callRegesteredAdsCount,
+  complatedProf,
+  registeredNewAd,
+  editProfileHandler,
+  cancleEditProfile,
+  cancleRegisterNewAd] = require("./config")
 
 module.exports = bot => {
-  bot.hears("آگهی های من", ctx => {
+  bot.hears("آگهی های من", (ctx, next) => {
     const Call = callRegesteredAds(ctx)
+    let myAdsID = []
+
     if (Call.myAds.length > 0) {
       Call.myAds.forEach(w => {
+        myAdsID.push(`edit-${w.id}`)
         ctx.reply(`
 نام شرکت:   ${w.company}
 دسته بندی شغلی:   ${w.category}
-محارت های مورد نیاز:   ${w.skills}
+مهارت های مورد نیاز:   ${w.skills}
 استان:   ${w.location}
 نوع قرارداد:   ${w.jobType}
 سابقه کار:   ${w.workExperience}
@@ -17,7 +28,7 @@ module.exports = bot => {
 ${w.description}`, {
           reply_markup: {
             inline_keyboard: [
-              [{ text: "ویرایش", callback_data: `edit-${w.id}` }]
+              [{ text: "ویرایش", callback_data: `edit-${w.count}` }]
             ]
           }
         })
@@ -34,6 +45,7 @@ ${w.description}`, {
         }
       })
     }
+    next(ctx)
   })
   bot.action("Register-new-ad", ctx => {
     ctx.deleteMessage()
