@@ -31,14 +31,13 @@ editAd(bot)
 const addFriend = require("./src/components/addFriend")
 addFriend(bot)
 
+const channel = require("./src/components/channel")
+channel(bot)
+
+const aboutUS = require("./src/components/aboutUS")
+aboutUS(bot)
 
 
-
-// bot.on("message", ctx => {
-//   bot.telegram.forwardMessage(-1001369097830, ctx.chat.id, ctx.message.message_id)
-
-//   ctx.reply("send")
-// })
 
 
 bot.launch()
