@@ -1,4 +1,7 @@
+const cancel = require("./cancel")
+const fs = require("fs")
 const [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
@@ -6,13 +9,12 @@ const [
   registeredNewAd,
   editProfileHandler,
   cancleEditProfile,
-  cancleRegisterNewAd] = require("./config")
-const cancel = require("./cancel")
-const fs = require("fs")
+  cancleRegisterNewAd,
+  cancleEditAd] = require("./config")
 
 module.exports = bot => {
   let profile = {}
-  let editProfile = { id: "", firstname: "", lastname: "", phone: "", address: "", email: "", jobPosition: "", resume: "" }
+  let editProfile = { id: 0, from: 0, nameuser: "", username: "", firstname: "", lastname: "", phone: "", address: "", email: "", jobPosition: "", resume: "" }
   let editProf = false
   let skipNum = 0
   let step = 0
@@ -20,6 +22,9 @@ module.exports = bot => {
     profile = callUserProfile(ctx)
     ctx.deleteMessage()
     editProfile.id = ctx.chat.id
+    editProfile.from = profile?.from
+    editProfile.nameuser = `${ctx.chat.first_name ? ctx.chat.first_name : ""} ${ctx.chat.last_name ? last_name : ""}`
+    editProfile.username = ctx.chat.username ? ctx.chat.username : ""
     cancleEditProfile(true, "All", true, 1, 0)
     ctx.reply("ویرایش پروفایل", {
       reply_markup: {
@@ -268,15 +273,7 @@ module.exports = bot => {
 لطفا یکی از گزینه های زیر را انتخاب کنید.
   `
     ctx.reply(messagee, {
-      reply_markup: {
-        keyboard: [
-          [{ text: "آگهی های ثبت شده" }],
-          [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-          [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-          [{ text: "درباره ما" }, { text: "کانال ما" }]
-        ],
-        resize_keyboard: true
-      }
+      reply_markup: menuKey(ctx)
     })
   })
 }

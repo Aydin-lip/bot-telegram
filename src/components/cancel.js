@@ -1,4 +1,5 @@
 const [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
@@ -19,15 +20,7 @@ module.exports = bot => {
 لطفا یکی از گزینه های زیر را انتخاب کنید
   `
     ctx.reply(messagee, {
-      reply_markup: {
-        keyboard: [
-          [{ text: "آگهی های ثبت شده" }],
-          [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-          [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-          [{ text: "درباره ما" }, { text: "کانال ما" }]
-        ],
-        resize_keyboard: true
-      }
+      reply_markup: menuKey(ctx)
     })
   })
 }

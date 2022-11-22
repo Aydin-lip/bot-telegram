@@ -1,5 +1,6 @@
 const fs = require("fs")
 const [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
@@ -70,7 +71,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 1)
@@ -80,7 +82,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 2)
@@ -90,7 +93,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 3)
@@ -100,7 +104,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 4)
@@ -112,7 +117,8 @@ ${myAd.description}`
               [{ text: "تمام وقت" }, { text: "پاره وقت" }],
               [{ text: "کارآموزی" }, { text: "دورکاری" }],
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 5)
@@ -124,7 +130,8 @@ ${myAd.description}`
               [{ text: "بدون محدودیت سابقه کار" }, { text: "کمتر از سه سال" }],
               [{ text: "سه تا شش سال" }, { text: "بیش از شش سال" }],
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 6)
@@ -134,7 +141,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 7)
@@ -144,7 +152,8 @@ ${myAd.description}`
           reply_markup: {
             keyboard: [
               [{ text: "انصراف" }]
-            ]
+            ],
+            resize_keyboard: true
           }
         })
         cancleEditAd(true, "All", true, 8)
@@ -239,15 +248,7 @@ ${myAd.description}`
     cancleEditAd(true, "All", false, 0)
 
     ctx.reply("تغییرات ذخیره شد.", {
-      reply_markup: {
-        keyboard: [
-          [{ text: "آگهی های ثبت شده" }],
-          [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-          [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-          [{ text: "درباره ما" }, { text: "کانال ما" }]
-        ],
-        resize_keyboard: true
-      }
+      reply_markup: menuKey(ctx)
     })
     let message = `
 نام شرکت:   ${myAd.company}

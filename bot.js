@@ -37,6 +37,8 @@ channel(bot)
 const aboutUS = require("./src/components/aboutUS")
 aboutUS(bot)
 
+const management = require("./src/admin/management")
+management(bot )
 
 
 

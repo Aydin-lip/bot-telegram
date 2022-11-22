@@ -1,4 +1,5 @@
 const [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
@@ -6,13 +7,14 @@ const [
   registeredNewAd,
   editProfileHandler,
   cancleEditProfile,
-  cancleRegisterNewAd] = require("./config")
+  cancleRegisterNewAd,
+  cancleEditAd] = require("./config")
 
 const fs = require("fs")
 
 module.exports = bot => {
   // ["id" , "company", "category", "skills", "location", "jobType", "workExperience", "salary", "description"]
-  let adInfo = { id: 0, count: 0,company: "", category: "", skills: "", location: "", jobType: "", workExperience: "", salary: "", description: "" }
+  let adInfo = { id: 0, count: 0, company: "", category: "", skills: "", location: "", jobType: "", workExperience: "", salary: "", description: "" }
 
   let registerAd = false
   let step = 0
@@ -37,7 +39,8 @@ module.exports = bot => {
             [{ text: "بدون محدودیت سابقه کار" }, { text: "کمتر از سه سال" }],
             [{ text: "سه تا شش سال" }, { text: "بیش از شش سال" }],
             [{ text: "انصراف" }]
-          ]
+          ],
+          resize_keyboard: true
         }
       })
       cancleRegisterNewAd(true, "stepRegisterAd", true, 6)
@@ -56,7 +59,8 @@ module.exports = bot => {
         reply_markup: {
           keyboard: [
             [{ text: "انصراف" }]
-          ]
+          ],
+          resize_keyboard: true
         }
       })
       cancleRegisterNewAd(true, "stepRegisterAd", true, 7)
@@ -93,7 +97,8 @@ module.exports = bot => {
                 [{ text: "تمام وقت" }, { text: "پاره وقت" }],
                 [{ text: "کارآموزی" }, { text: "دورکاری" }],
                 [{ text: "انصراف" }]
-              ]
+              ],
+              resize_keyboard: true
             }
           })
           cancleRegisterNewAd(true, "stepRegisterAd", true, 5)
@@ -137,7 +142,7 @@ module.exports = bot => {
 
       let count = callRegesteredAdsCount(ctx)
       adInfo.count = count.adsCount[count.adsCount.length - 1].count + 1
-      let myAdCount = {count: adInfo.count, id: ctx.chat.id}
+      let myAdCount = { count: adInfo.count, id: ctx.chat.id }
       let adsCount = count.adsCount
       adsCount.push(myAdCount)
 
@@ -171,15 +176,7 @@ ${adInfo.description}`
 لطفا یکی از گزینه های زیر را انتخاب کنید.
   `
     ctx.reply(messagee, {
-      reply_markup: {
-        keyboard: [
-          [{ text: "آگهی های ثبت شده" }],
-          [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
-          [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
-          [{ text: "درباره ما" }, { text: "کانال ما" }]
-        ],
-        resize_keyboard: true
-      }
+      reply_markup: menuKey(ctx)
     })
 
   })

@@ -1,4 +1,5 @@
 const [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
@@ -6,7 +7,8 @@ const [
   registeredNewAd,
   editProfileHandler,
   cancleEditProfile,
-  cancleRegisterNewAd] = require("./config")
+  cancleRegisterNewAd,
+  cancleEditAd] = require("./config")
 
 module.exports = bot => {
   bot.hears("آگهی های من", (ctx, next) => {

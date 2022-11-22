@@ -1,4 +1,21 @@
+require("dotenv").config()
 const fs = require("fs")
+
+// menu inline keyboard for user
+const menuKey = ctx => {
+  let admins = process.env.ADMINS.split(",")
+  const managementKey = admins.includes(String(ctx.chat.id)) ? [{text: "مدیریت"}] : []
+  return {
+    keyboard: [
+      [{ text: "آگهی های ثبت شده" }],
+      [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
+      [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
+      [{ text: "درباره ما" }, { text: "کانال ما" }],
+      managementKey
+    ],
+    resize_keyboard: true
+  }
+}
 
 // get profile user
 const callUserProfile = ctx => {
@@ -72,7 +89,8 @@ const registeredNewAd = ctx => {
     reply_markup: {
       keyboard: [
         [{ text: "انصراف" }]
-      ]
+      ],
+      resize_keyboard: true
     }
   })
   return true
@@ -215,6 +233,7 @@ const cancleEditAd = (edit, how, editAdA, stepAdA) => {
 
 
 module.exports = [
+  menuKey,
   callUserProfile,
   callRegesteredAds,
   callRegesteredAdsCount,
