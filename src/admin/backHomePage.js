@@ -1,14 +1,4 @@
-const [
-  menuKey,
-  callUserProfile,
-  callRegesteredAds,
-  callRegesteredAdsCount,
-  complatedProf,
-  registeredNewAd,
-  editProfileHandler,
-  cancleEditProfile,
-  cancleRegisterNewAd,
-  cancleEditAd] = require("../components/config")
+const [menuKey] = require("../components/config")
 
 module.exports = bot => {
   bot.hears("بازگشت به صفحه اصلی", ctx => {
