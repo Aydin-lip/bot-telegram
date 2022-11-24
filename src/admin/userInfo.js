@@ -1,7 +1,11 @@
 const [
   menuKey,
   admin,
-  cancleUserInfo] = require("./config")
+  cancleUserInfo,
+  cancleEditUser,
+  callRegesteredAds,
+  callProfileUser,
+  countAds] = require("./config")
 const fs = require("fs")
 const editProfileUser = require("./editProfileUser")
 
@@ -45,6 +49,9 @@ Ex) 344445518
       })
 
       if (profileUser?.id) {
+        let ads = callRegesteredAds()
+        let registerAdUser = ads.filter(a => a.id == profileUser?.id)
+
         let message =
           `
 آیدی:   ${profileUser?.id}
@@ -58,6 +65,8 @@ Ex) 344445518
 ایمیل:   ${profileUser?.email}
 موقعیت شغلی:   ${profileUser?.jobPosition}
 رزومه:   ${profileUser?.resume ? "✔" : "❌"}
+
+آگهی های ثبت شده کاربر:   ${registerAdUser.length}
 `
         ctx.reply(message, {
           reply_markup: {

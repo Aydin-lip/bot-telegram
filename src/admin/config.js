@@ -6,7 +6,7 @@ const menuKey = () => {
   return {
     keyboard: [
       [{ text: "کاربر های ربات" }, { text: "اطلاعات دقیق کاربر مورد نظر" }],
-      [{ text: "آگهی های ثبت شده" }, { text: "آگهی های گزارش شده" }, { text: "آگهی های مسدود شده" }],
+      [{ text: "مشخصات آگهی های ثبت شده" }, { text: "آگهی های گزارش شده" }, { text: "آگهی های مسدود شده" }],
       [{ text: "ارسال پیام به تمام کاربرها" }, { text: "ارسال پیام به کاربر مورد نظر" }],
       [{ text: "ادمین های ربات" }, { text: "اضافه کردن ادمین جدید" }],
       [{ text: "تغییر پیام (کانال ما)" }, { text: "اضافه کردن کانال" }],
@@ -73,9 +73,68 @@ const cancleEditUser = (edit, how, editUserA, stepEditUserA) => {
   }
 }
 
+// get all registered Ads
+const callRegesteredAds = () => {
+  let allRegister = fs.readFileSync("./data/registeredAds.json")
+  let ads = JSON.parse(allRegister)
+  return ads
+}
+
+// get profile for user
+const callProfileUser = id => {
+  let users = fs.readFileSync("./data/profiles.json")
+  let usersData = JSON.parse(users)
+  let user = usersData.filter(u => u.id == id)[0]
+  return user
+}
+
+// all count ads 
+const countAds = () => {
+  let counts = fs.readFileSync("./data/countAds.json")
+  let countsData = JSON.parse(counts)
+  return countsData
+}
+
+let editAdUser = false
+let stepEditAdUser = 0
+const cancleEditAdUser = (edit, how, editAdA, stepAdA) => {
+  if (edit) {
+    switch (how) {
+      case "edit":
+        editAdUser = editAdA
+      case "step":
+        stepEditAdUser = stepAdA
+      case "All":
+        editAdUser = editAdA
+        stepEditAdUser = stepAdA
+
+      default:
+        break;
+    }
+  } else {
+    switch (how) {
+      case "edit":
+        return editAdUser
+      case "step":
+        return stepEditAdUser
+      case "All":
+        return {editAdUser, stepEditAdUser} 
+        
+      default:
+        break;
+    }
+  }
+}
+
+
+
 
 module.exports = [
   menuKey,
   admin,
   cancleUserInfo,
-  cancleEditUser]
+  cancleEditUser,
+  callRegesteredAds,
+  callProfileUser,
+  countAds,
+  cancleEditAdUser]

@@ -8,6 +8,7 @@ const backHomePage = require("./backHomePage")
 const users = require("./users")
 const userInfo = require("./userInfo")
 const back = require("./back")
+const registeredAds = require("./registeredAds")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -22,5 +23,6 @@ module.exports = bot => {
   back(bot)
   users(bot)
   userInfo(bot)
+  registeredAds(bot)
 
 }
