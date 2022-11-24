@@ -9,6 +9,8 @@ const users = require("./users")
 const userInfo = require("./userInfo")
 const back = require("./back")
 const registeredAds = require("./registeredAds")
+const sendAllMessage = require("./sendAllMessage")
+const sendMessageUser = require("./sendMessageUser")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -24,5 +26,7 @@ module.exports = bot => {
   users(bot)
   userInfo(bot)
   registeredAds(bot)
+  sendAllMessage(bot)
+  sendMessageUser(bot)
 
 }

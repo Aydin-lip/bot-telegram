@@ -95,6 +95,7 @@ const countAds = () => {
   return countsData
 }
 
+// cancle edit ad user
 let editAdUser = false
 let stepEditAdUser = 0
 const cancleEditAdUser = (edit, how, editAdA, stepAdA) => {
@@ -118,14 +119,58 @@ const cancleEditAdUser = (edit, how, editAdA, stepAdA) => {
       case "step":
         return stepEditAdUser
       case "All":
-        return {editAdUser, stepEditAdUser} 
-        
+        return { editAdUser, stepEditAdUser }
+
       default:
         break;
     }
   }
 }
 
+// send message for all user
+let sendAllMessage = false
+const sendAllMess = (edit, send) => {
+  if (edit) {
+    sendAllMessage = send
+  } else {
+    return sendAllMessage
+  }
+}
+
+// send message for user
+let sendUserMessage = false
+let stepUserMessage = 0
+const sendUserMess = (edit, how, sendA, stepA) => {
+  if (edit) {
+    switch (how) {
+      case "send":
+        sendUserMessage = sendA
+        break;
+      case "step":
+        stepUserMessage = stepA
+        break;
+      case "All":
+        sendUserMessage = sendA
+        stepUserMessage = stepA
+        break;
+
+      default:
+        break;
+    }
+  } else {
+    switch (how) {
+      case "send":
+        return sendUserMessage
+      case "step":
+        return stepUserMessage
+      case "All":
+        return { sendUserMessage, stepUserMessage }
+
+      default:
+        break;
+    }
+  }
+}
 
 
 
@@ -137,4 +182,6 @@ module.exports = [
   callRegesteredAds,
   callProfileUser,
   countAds,
-  cancleEditAdUser]
+  cancleEditAdUser,
+  sendAllMess,
+  sendUserMess]
