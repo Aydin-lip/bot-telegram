@@ -8,7 +8,8 @@ const [
   countAds,
   cancleEditAdUser,
   sendAllMess,
-  sendUserMess] = require("./config")
+  sendUserMess,
+  addAdmin]= require("./config")
 
 module.exports = bot => {
   bot.hears("بازگشت", ctx => {
@@ -18,6 +19,7 @@ module.exports = bot => {
       cancleEditAdUser(true, "All", false, 0)
       sendAllMess(true, false)
       sendUserMess(true, "All", false, 0)
+      addAdmin(true, false)
       
       ctx.reply("شما به منوی مدیریت بازگشتید.", {
         reply_markup: menuKey()

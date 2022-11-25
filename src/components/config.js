@@ -3,8 +3,10 @@ const fs = require("fs")
 
 // menu inline keyboard for user
 const menuKey = ctx => {
-  let admins = process.env.ADMINS.split(",")
-  const managementKey = admins.includes(String(ctx.chat.id)) ? [{text: "مدیریت"}] : []
+  let admin = process.env.ADMIN
+  let admins = fs.readFileSync("./data/config.json")
+  let adminsData = JSON.parse(admins)[0]
+  const managementKey = adminsData.admins.includes(ctx.chat.id) || admin == ctx.chat.id ? [{text: "مدیریت"}] : []
   return {
     keyboard: [
       [{ text: "آگهی های ثبت شده" }],

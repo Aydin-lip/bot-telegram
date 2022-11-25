@@ -20,8 +20,10 @@ const menuKey = () => {
 
 // Is the user an admin or not
 const admin = ctx => {
-  let admins = process.env.ADMINS.split(",")
-  if (admins.includes(String(ctx?.chat?.id))) {
+  let admin = process.env.ADMIN
+  let admins = fs.readFileSync("./data/config.json")
+  let adminsData = JSON.parse(admins)[0]
+  if (adminsData.admins.includes(ctx.chat.id) || admin == ctx.chat.id) {
     return true
   } else {
     ctx?.reply("شما به این بخش دسترسی ندارید")
@@ -172,6 +174,16 @@ const sendUserMess = (edit, how, sendA, stepA) => {
   }
 }
 
+// add new admin
+let addNewAdmin = false
+const addAdmin = (edit, add) => {
+  if (edit) {
+    addNewAdmin = add
+  } else {
+    return addNewAdmin
+  }
+}
+
 
 
 module.exports = [
@@ -184,4 +196,5 @@ module.exports = [
   countAds,
   cancleEditAdUser,
   sendAllMess,
-  sendUserMess]
+  sendUserMess,
+  addAdmin]
