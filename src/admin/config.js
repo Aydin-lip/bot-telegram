@@ -204,6 +204,16 @@ const changeChannel = (edit, change) => {
   }
 }
 
+// edit message about us
+let editMessageAboutUs = false
+const aboutUs = (edit, change) => {
+  if (edit) {
+    editMessageAboutUs = change
+  } else {
+    return editMessageAboutUs
+  }
+}
+
 
 
 
@@ -220,4 +230,5 @@ module.exports = [
   sendUserMess,
   addAdmin,
   changeChannelMessage,
-  changeChannel]
+  changeChannel,
+  aboutUs]

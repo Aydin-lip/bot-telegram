@@ -46,6 +46,7 @@ module.exports = bot => {
   })
 
   bot.action("edit_channel", ctx => {
+    ctx.deleteMessage()
     ctx.reply("لطفا آیدی کانال را ارسال کنید", {
       reply_markup: {
         keyboard: [
@@ -58,6 +59,7 @@ module.exports = bot => {
   })
 
   bot.action("delete_channel", ctx => {
+    ctx.deleteMessage()
     channelData[1].channel = false
     fs.writeFileSync("./data/config.json", JSON.stringify(channelData))
     ctx.reply("کانال با موفقیت حذف شد.", {

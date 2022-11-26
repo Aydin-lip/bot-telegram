@@ -15,6 +15,7 @@ const adminsList = require("./adminsList")
 const addAdmin = require("./addAdmin")
 const channelMessage = require("./channelMessage")
 const channel = require("./channel")
+const aboutUS = require("./aboutUS")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -36,5 +37,6 @@ module.exports = bot => {
   addAdmin(bot)
   channelMessage(bot)
   channel(bot)
+  aboutUS(bot)
 
 }

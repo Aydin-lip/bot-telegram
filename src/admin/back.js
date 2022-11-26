@@ -11,7 +11,8 @@ const [
   sendUserMess,
   addAdmin,
   changeChannelMessage,
-  changeChannel]= require("./config")
+  changeChannel,
+  aboutUs]= require("./config")
 
 module.exports = bot => {
   bot.hears("بازگشت", ctx => {
@@ -24,6 +25,7 @@ module.exports = bot => {
       addAdmin(true, false)
       changeChannelMessage(true, false)
       changeChannel(true, false)
+      aboutUs(true, false)
       
       ctx.reply("شما به منوی مدیریت بازگشتید.", {
         reply_markup: menuKey()
