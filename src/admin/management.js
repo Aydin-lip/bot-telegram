@@ -13,6 +13,8 @@ const sendAllMessage = require("./sendAllMessage")
 const sendMessageUser = require("./sendMessageUser")
 const adminsList = require("./adminsList")
 const addAdmin = require("./addAdmin")
+const channelMessage = require("./channelMessage")
+const channel = require("./channel")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -32,5 +34,7 @@ module.exports = bot => {
   sendMessageUser(bot)
   adminsList(bot)
   addAdmin(bot)
+  channelMessage(bot)
+  channel(bot)
 
 }

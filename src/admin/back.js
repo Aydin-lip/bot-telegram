@@ -9,7 +9,9 @@ const [
   cancleEditAdUser,
   sendAllMess,
   sendUserMess,
-  addAdmin]= require("./config")
+  addAdmin,
+  changeChannelMessage,
+  changeChannel]= require("./config")
 
 module.exports = bot => {
   bot.hears("بازگشت", ctx => {
@@ -20,6 +22,8 @@ module.exports = bot => {
       sendAllMess(true, false)
       sendUserMess(true, "All", false, 0)
       addAdmin(true, false)
+      changeChannelMessage(true, false)
+      changeChannel(true, false)
       
       ctx.reply("شما به منوی مدیریت بازگشتید.", {
         reply_markup: menuKey()

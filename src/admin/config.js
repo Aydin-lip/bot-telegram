@@ -9,7 +9,7 @@ const menuKey = () => {
       [{ text: "مشخصات آگهی های ثبت شده" }, { text: "آگهی های گزارش شده" }, { text: "آگهی های مسدود شده" }],
       [{ text: "ارسال پیام به تمام کاربرها" }, { text: "ارسال پیام به کاربر مورد نظر" }],
       [{ text: "ادمین های ربات" }, { text: "اضافه کردن ادمین جدید" }],
-      [{ text: "تغییر پیام (کانال ما)" }, { text: "اضافه کردن کانال" }],
+      [{ text: "تغییر پیام (کانال ما)" }, { text: "اضافه/حذف کردن کانال" }],
       [{ text: "تغییر پیام (درباره ما)" }],
       [{ text: "بازگشت به صفحه اصلی" }]
     ],
@@ -184,6 +184,27 @@ const addAdmin = (edit, add) => {
   }
 }
 
+// change we channel message
+let changeChannelMess = false
+const changeChannelMessage = (edit, chang) => {
+  if (edit) {
+    changeChannelMess = chang
+  } else {
+    return changeChannelMess
+  }
+}
+
+// add/change channel bot
+let channelChange = false
+const changeChannel = (edit, change) => {
+  if (edit) {
+    channelChange = change
+  } else {
+    return channelChange
+  }
+}
+
+
 
 
 module.exports = [
@@ -197,4 +218,6 @@ module.exports = [
   cancleEditAdUser,
   sendAllMess,
   sendUserMess,
-  addAdmin]
+  addAdmin,
+  changeChannelMessage,
+  changeChannel]
