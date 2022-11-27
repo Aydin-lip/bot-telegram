@@ -8,7 +8,8 @@ const [
   editProfileHandler,
   cancleEditProfile,
   cancleRegisterNewAd,
-  cancleEditAd] = require("./config")
+  cancleEditAd] = require("../config")
+const editProfile = require("./editProfile")
 
 module.exports = bot => {
   let profile = {}
@@ -19,4 +20,5 @@ module.exports = bot => {
     profile = callUserProfile(ctx)
     bot.telegram.sendDocument(ctx.chat.id, profile?.resume)
   })
+  editProfile(bot)
 }

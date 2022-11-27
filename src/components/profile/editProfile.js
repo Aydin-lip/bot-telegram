@@ -10,7 +10,7 @@ const [
   editProfileHandler,
   cancleEditProfile,
   cancleRegisterNewAd,
-  cancleEditAd] = require("./config")
+  cancleEditAd] = require("../config")
 
 module.exports = bot => {
   let profile = {}

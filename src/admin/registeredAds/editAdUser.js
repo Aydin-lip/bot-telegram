@@ -6,7 +6,7 @@ const [
   callRegesteredAds,
   callProfileUser,
   countAds,
-  cancleEditAdUser] = require("./config")
+  cancleEditAdUser] = require("../config")
 const fs = require("fs")
 
 module.exports = bot => {

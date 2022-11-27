@@ -8,7 +8,8 @@ const [
   editProfileHandler,
   cancleEditProfile,
   cancleRegisterNewAd,
-  cancleEditAd] = require("./config")
+  cancleEditAd] = require("../config")
+const editAd = require("./editAd")
 
 module.exports = bot => {
   bot.hears("آگهی های من", (ctx, next) => {
@@ -53,4 +54,5 @@ ${w.description}`, {
     ctx.deleteMessage()
     registeredNewAd(ctx)
   })
+  editAd(bot)
 }

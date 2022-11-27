@@ -2,7 +2,7 @@ const [
   menuKey,
   admin,
   cancleUserInfo,
-  cancleEditUser] = require("./config")
+  cancleEditUser] = require("../config")
 const fs = require("fs")
 
 module.exports = (bot) => {

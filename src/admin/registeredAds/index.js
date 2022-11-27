@@ -5,7 +5,7 @@ const [
   cancleEditUser,
   callRegesteredAds,
   callProfileUser,
-  countAds] = require("./config")
+  countAds] = require("../config")
 const fs = require("fs")
 const editAdUser = require("./editAdUser")
 

@@ -28,6 +28,7 @@ module.exports = bot => {
 
   backHomePage(bot)
   back(bot)
+  
   users(bot)
   userInfo(bot)
   registeredAds(bot)
