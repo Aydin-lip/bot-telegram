@@ -10,16 +10,29 @@ const [
   cancleRegisterNewAd,
   cancleEditAd] = require("../config")
 const editAd = require("./editAd")
+const fs = require("fs")
 
 module.exports = bot => {
   bot.hears("آگهی های من", (ctx, next) => {
     const Call = callRegesteredAds(ctx)
     let myAdsID = []
+    let reportAds = fs.readFileSync("./data/config.json")
+    let reportAdaData = JSON.parse(reportAds)
+    let reportCountAds = reportAdaData[4].reports_ads.map(r => r.count_ad)
 
     if (Call.myAds.length > 0) {
       Call.myAds.forEach(w => {
+        let report = false
+        if (reportCountAds.includes(w.count)) {
+          let rep = reportAdaData[4].reports_ads.filter(r => r.count_ad == w.count)[0]
+          if (rep.confirmed) {
+            report = true
+          }
+        }
         myAdsID.push(`edit-${w.id}`)
         ctx.reply(`
+${report ? "📛 این آگهی مسدود شده 📛" : ""}
+
 نام شرکت:   ${w.company}
 دسته بندی شغلی:   ${w.category}
 مهارت های مورد نیاز:   ${w.skills}

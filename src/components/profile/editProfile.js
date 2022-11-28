@@ -1,4 +1,3 @@
-const cancel = require("./cancel")
 const fs = require("fs")
 const [
   menuKey,

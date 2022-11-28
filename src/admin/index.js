@@ -16,6 +16,8 @@ const addAdmin = require("./addAdmin")
 const channelMessage = require("./channelMessage")
 const channel = require("./channel")
 const aboutUS = require("./aboutUS")
+const reportedAds = require("./reportedAds")
+const blockedAds = require("./blockedAds")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -32,6 +34,8 @@ module.exports = bot => {
   users(bot)
   userInfo(bot)
   registeredAds(bot)
+  reportedAds(bot)
+  blockedAds(bot)
   sendAllMessage(bot)
   sendMessageUser(bot)
   adminsList(bot)
@@ -39,5 +43,5 @@ module.exports = bot => {
   channelMessage(bot)
   channel(bot)
   aboutUS(bot)
-
+  
 }

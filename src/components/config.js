@@ -38,11 +38,13 @@ const callRegesteredAds = ctx => {
   let myAds = []
   let allRegister = fs.readFileSync("./data/registeredAds.json")
   ads = JSON.parse(allRegister)
-  ads.filter(a => {
-    if (a.id == ctx.chat.id) {
-      myAds.push(a)
-    }
-  })
+  if (ctx) {
+    ads.filter(a => {
+      if (a.id == ctx.chat.id) {
+        myAds.push(a)
+      }
+    })
+  }
   return { ads, myAds }
 }
 
@@ -233,6 +235,16 @@ const cancleEditAd = (edit, how, editAdA, stepAdA) => {
   }
 }
 
+// for report ad
+let reportAd = false
+const cancleReportAd = (edit, report) => {
+  if (edit) {
+    reportAd = report
+  } else {
+    return reportAd
+  }
+}
+
 
 module.exports = [
   menuKey,
@@ -244,4 +256,5 @@ module.exports = [
   editProfileHandler,
   cancleEditProfile,
   cancleRegisterNewAd,
-  cancleEditAd]
+  cancleEditAd,
+  cancleReportAd]

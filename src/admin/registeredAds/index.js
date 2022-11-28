@@ -13,7 +13,17 @@ module.exports = bot => {
   bot.hears("مشخصات آگهی های ثبت شده", ctx => {
     if (admin(ctx)) {
       let ads = callRegesteredAds()
+      let reportAds = fs.readFileSync("./data/config.json")
+      let reportAdaData = JSON.parse(reportAds)
+      let reportCountAds = reportAdaData[4].reports_ads.map(r => r.count_ad)
       ads.forEach(ad => {
+        let rep = {}
+        let report = false
+        if (reportCountAds.includes(ad.count)) {
+          rep = reportAdaData[4].reports_ads.filter(r => r.count_ad == ad.count)[0]
+          report = true
+        }
+
         let profile = callProfileUser(ad.id)
         let message = `
 اطلاعات کاربر
@@ -37,7 +47,15 @@ module.exports = bot => {
   نوع قرارداد:   ${ad.jobType}
   سابقه کار:   ${ad.workExperience}
   حداقل حقوق:   ${ad.salary}
-  ${ad.description}`
+  ${ad.description}
+
+${report ? `
+📛 این آگهی گزارش شده
+آیدی کاربر (گزارش کننده):   ${rep?.id}
+پیام گزارش:   ${rep?.report_message}
+مسدود شده:   ${rep?.confirmed ? "✅" : "❌"}
+` : ""}
+`
 
         ctx.reply(message, {
           reply_markup: {
