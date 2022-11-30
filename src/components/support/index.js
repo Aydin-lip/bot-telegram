@@ -16,7 +16,7 @@ const fs = require("fs")
 const replyMessage = require("./replyMessage")
 
 module.exports = bot => {
-  bot.hears("پشتیبانی", ctx => {
+  bot.hears(["پشتیبانی", "/support"], ctx => {
     ctx.reply("لطفا برای ارتباط با پشتیبانی پیام خود را ارسال نمایید...", {
       reply_markup: {
         keyboard: [

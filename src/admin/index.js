@@ -21,7 +21,7 @@ const blockedAds = require("./blockedAds")
 const replyMessage = require("./replyMessage")
 
 module.exports = bot => {
-  bot.hears("مدیریت", ctx => {
+  bot.hears(["مدیریت", "/admin"], ctx => {
     if (admin(ctx)) {
       ctx.reply("شما وارد بخش مدیریت ربات شدید.", {
         reply_markup: menuKey()

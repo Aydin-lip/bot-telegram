@@ -13,7 +13,7 @@ const editProfile = require("./editProfile")
 
 module.exports = bot => {
   let profile = {}
-  bot.hears("پروفایل", ctx => {
+  bot.hears(["پروفایل", "/profile"], ctx => {
     editProfileHandler(ctx)
   })
   bot.action("get-resume", ctx => {

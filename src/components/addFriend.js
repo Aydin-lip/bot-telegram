@@ -1,7 +1,7 @@
 require("dotenv").config()
 
 module.exports = bot => {
-  bot.hears("دعوت دوستان", ctx => {
+  bot.hears(["دعوت دوستان", "/invite"], ctx => {
     let message = `
 شما با ارسال این لینک به دوستان خود میتوانید آنها را به ربات دعوت کنید :)
 `

@@ -28,4 +28,7 @@ module.exports = bot => {
   
   const support = require("./support")
   support(bot)
+
+  const help = require("./help")
+  help(bot)
 }

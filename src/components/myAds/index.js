@@ -13,7 +13,7 @@ const editAd = require("./editAd")
 const fs = require("fs")
 
 module.exports = bot => {
-  bot.hears("آگهی های من", (ctx, next) => {
+  bot.hears(["آگهی های من", "/myads"], (ctx, next) => {
     const Call = callRegesteredAds(ctx)
     let myAdsID = []
     let reportAds = fs.readFileSync("./data/config.json")

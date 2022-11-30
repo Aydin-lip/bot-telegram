@@ -18,7 +18,7 @@ module.exports = bot => {
 
   let registerAd = false
   let step = 0
-  bot.hears("ثبت آگهی جدید", ctx => {
+  bot.hears(["ثبت آگهی جدید", "/newad"], ctx => {
     if (registeredNewAd(ctx)) {
       adInfo.id = ctx.chat.id
       registerAd = true

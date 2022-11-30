@@ -22,7 +22,7 @@ module.exports = (bot) => {
     reportAd.push(`report-ad-${w.count}`)
   })
 
-  bot.hears("آگهی های ثبت شده", ctx => {
+  bot.hears(["آگهی های ثبت شده", "/registeredads"], ctx => {
     let reportAds = fs.readFileSync("./data/config.json")
     let reportAdaData = JSON.parse(reportAds)
     let reportCountAds = reportAdaData[4].reports_ads.map(r => r.count_ad)
