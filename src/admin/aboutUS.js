@@ -41,6 +41,7 @@ module.exports = bot => {
         reply_markup: menuKey()
       })
     }
+    next(ctx)
   })
 
 }

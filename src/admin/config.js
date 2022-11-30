@@ -214,7 +214,14 @@ const aboutUs = (edit, change) => {
   }
 }
 
-
+let replyMessageON = false
+const replyMessage = (edit, reply) => {
+  if (edit) {
+    replyMessageON = reply
+  } else {
+    return replyMessageON
+  }
+}
 
 
 module.exports = [
@@ -231,4 +238,5 @@ module.exports = [
   addAdmin,
   changeChannelMessage,
   changeChannel,
-  aboutUs]
+  aboutUs,
+  replyMessage]

@@ -18,6 +18,7 @@ const channel = require("./channel")
 const aboutUS = require("./aboutUS")
 const reportedAds = require("./reportedAds")
 const blockedAds = require("./blockedAds")
+const replyMessage = require("./replyMessage")
 
 module.exports = bot => {
   bot.hears("مدیریت", ctx => {
@@ -43,5 +44,5 @@ module.exports = bot => {
   channelMessage(bot)
   channel(bot)
   aboutUS(bot)
-  
+  replyMessage(bot)
 }

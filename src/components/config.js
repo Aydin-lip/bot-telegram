@@ -6,13 +6,14 @@ const menuKey = ctx => {
   let admin = process.env.ADMIN
   let admins = fs.readFileSync("./data/config.json")
   let adminsData = JSON.parse(admins)[0]
-  const managementKey = adminsData.admins.includes(ctx.chat.id) || admin == ctx.chat.id ? [{text: "مدیریت"}] : []
+  const managementKey = adminsData.admins.includes(ctx.chat.id) || admin == ctx.chat.id ? [{ text: "مدیریت" }] : []
   return {
     keyboard: [
       [{ text: "آگهی های ثبت شده" }],
       [{ text: "ثبت آگهی جدید" }, { text: "آگهی های من" }],
       [{ text: "پروفایل" }, { text: "دعوت دوستان" }],
       [{ text: "درباره ما" }, { text: "کانال ما" }],
+      [{ text: "پشتیبانی" }],
       managementKey
     ],
     resize_keyboard: true
@@ -245,6 +246,24 @@ const cancleReportAd = (edit, report) => {
   }
 }
 
+let supportON = false
+let support = (edit, supp) => {
+  if (edit) {
+    supportON = supp
+  } else {
+    return supportON
+  }
+}
+
+let replyMessageON = false
+const replyMessage = (edit, reply) => {
+  if (edit) {
+    replyMessageON = reply
+  } else {
+    return replyMessageON
+  }
+}
+
 
 module.exports = [
   menuKey,
@@ -257,4 +276,6 @@ module.exports = [
   cancleEditProfile,
   cancleRegisterNewAd,
   cancleEditAd,
-  cancleReportAd]
+  cancleReportAd,
+  support,
+  replyMessage]

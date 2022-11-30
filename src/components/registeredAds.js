@@ -156,10 +156,10 @@ ${adData?.description}`
         if (a == admin) {
           adminHas = false
         }
-        bot.telegram.sendMessage(a, "یک آگهی گزارش شد.")
+        bot.telegram.sendMessage(a, "یک آگهی گزارش شد.").then(res => { }).catch(rej => { })
       })
       if (adminHas) {
-        bot.telegram.sendMessage(admin, "یک آگهی گزارش شد.")
+        bot.telegram.sendMessage(admin, "یک آگهی گزارش شد.").then(res => { }).catch(rej => { })
       }
 
       cancleReportAd(true, false)

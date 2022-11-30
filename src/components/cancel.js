@@ -9,7 +9,9 @@ const [
   cancleEditProfile,
   cancleRegisterNewAd,
   cancleEditAd,
-  cancleReportAd] = require("./config")
+  cancleReportAd,
+  support,
+  replyMessage] = require("./config")
 
 module.exports = bot => {
   bot.hears("انصراف", ctx => {
@@ -17,6 +19,8 @@ module.exports = bot => {
     cancleRegisterNewAd(true, "All", false, 0)
     cancleEditAd(true, "All", false, 0)
     cancleReportAd(true, false)
+    support(true, false)
+    replyMessage(true, false)
 
     const messagee = `
 شما به منوی اصلی ربات برگشتید.
